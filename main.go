@@ -51,6 +51,11 @@ func main() {
 			req.URL.Path = fmt.Sprintf("%s%s", *prependPath, r.URL.Path)
 			req.URL.Host = *proxyHost
 			req.Host = *proxyHost
+
+			if req.Method == "POST" {
+				req.Header.Set("Content-Type", "application/json")
+			}
+
 			awsauth.Sign4(req, awsauth.Credentials{
 				AccessKeyID:     *awsAccessKey,
 				SecretAccessKey: *awsSecretKey,
